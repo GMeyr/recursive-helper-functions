@@ -16,6 +16,7 @@ var getElementsByClassName = function(className, node){
   }
 
   for(var i = 0; i < node.childNodes.length; i++){
+    console.log("length:" + node.childNodes.length);
     var current = getElementsByClassName(className, node[i]);
     node.concat(current);
   }
