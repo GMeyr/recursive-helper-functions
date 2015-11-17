@@ -7,19 +7,21 @@
 
 var getElementsByClassName = function(className, node){
   // your code here
-  node = node || document.body;
   var results = [];
-  var parts = node.className.split(' ');
 
-  if( parts.indexOf(className) > -1 ){
-    results.push(node);  
+  node = node || document.body;
+
+  if(node.nodeType === 1) {
+    var parts = node.className.split(" ");
+    if(parts.indexOf(className) > - 1){
+      results.push(node);  
+    }
+
+    for(var i = 0; i < node.childNodes.length; i++){
+      current = getElementsByClassName(className, node.childNodes[i]);
+      results = results.concat(current);
+    }
   }
-
-  for(var i = 0; i < node.childNodes.length; i++){
-    console.log("length:" + node.childNodes.length);
-    var current = getElementsByClassName(className, node[i]);
-    node.concat(current);
-  }
-
+  
   return results;
 };
