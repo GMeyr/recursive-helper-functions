@@ -16,6 +16,18 @@ var stringifyJSON = function(obj) {
       middle.push(stringifyJSON(obj[i]));
     }
     obj = '[' + middle.join(",") + ']';
-  } else if(typeof(obj))
+  } else {
+      console.log("keys length:" + Object.keys(obj).length);
+      if(Object.keys(obj).length === 0) {
+        return '{}';
+      }
+      
+      var keyValue = [];
+      for(var key in obj){
+        keyValue.push(stringifyJSON(key) + ":" + stringifyJSON(obj[key]));      
+      }
+      obj = "{" + keyValue.join(",") + "}";
+    
+  }
   return obj;
 }
