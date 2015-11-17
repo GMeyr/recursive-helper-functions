@@ -5,9 +5,10 @@
 
 var stringifyJSON = function(obj) {
   // your code goes here
-  if(typeof(obj) === 'number' || obj === null || typeof(obj) === 'boolean' ) {
+  if(typeof(obj) === 'number' || obj === null || typeof(obj) === 'boolean' && typeof(obj) !== 'function' && typeof obj !== 'undefined') {
     obj = '' + obj;
   } else if(typeof(obj) === 'string') {
+    console.log("processing as string");
     obj = '"' + obj + '"';
   } else if(Array.isArray(obj)) {
     
@@ -17,17 +18,19 @@ var stringifyJSON = function(obj) {
     }
     obj = '[' + middle.join(",") + ']';
   } else {
-      console.log("keys length:" + Object.keys(obj).length);
+      //console.log("keys length:" + Object.keys(obj).length);
       if(Object.keys(obj).length === 0) {
         return '{}';
       }
       
       var keyValue = [];
       for(var key in obj){
+        if(typeof(obj[key]) === 'function' || typeof(obj[key]) === 'undefined' ) {
+          continue;
+        }
         keyValue.push(stringifyJSON(key) + ":" + stringifyJSON(obj[key]));      
       }
       obj = "{" + keyValue.join(",") + "}";
-    
   }
   return obj;
 }
